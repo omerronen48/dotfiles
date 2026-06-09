@@ -18,15 +18,20 @@ Behavioral guidelines that bias toward correctness, simplicity, and a clean main
 - For non-trivial changes, pause once and ask: "Is there a more elegant way?" If a fix feels hacky, write the elegant version. Skip this for obvious one-liners — don't over-engineer.
 - Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-## 3. The Workflow Chain (brainstorm → plan → execute)
+## 3. The Workflow Chain (project → brainstorm → plan → execute)
 
 For any non-trivial work, follow this local skill chain. It supersedes the superpowers equivalents — do not invoke `superpowers:brainstorming`, `superpowers:writing-plans`, `superpowers:executing-plans`, `superpowers:subagent-driven-development`, `superpowers:dispatching-parallel-agents`, `superpowers:test-driven-development`, `superpowers:using-git-worktrees`, `superpowers:verification-before-completion`, or `superpowers:finishing-a-development-branch` directly. They are subsumed.
 
-- **brainstorming-time** — turn an idea into a reviewable spec with a mind map. Use BEFORE any creative work (new features, new components, behavior changes). Hands off to writing-plans-time.
+- **project-time** — turn a project-sized idea (new project or large multi-feature initiative) into a technical roadmap with milestones. Resolves stack, architecture, scope, and non-functional targets up front so feature-level brainstorms stop re-litigating them. Optional — skip for a single feature inside an existing codebase. Hands off to brainstorming-time (one milestone at a time).
+- **brainstorming-time** — turn an idea (or one roadmap milestone) into a reviewable spec with a mind map. Use BEFORE any creative work (new features, new components, behavior changes). Hands off to writing-plans-time.
 - **writing-plans-time** — turn an approved spec into a plan with a File Edit Manifest and parallel-executable waves. Use BEFORE touching code. Hands off to executing-plan-time.
 - **executing-plan-time** — run the plan end-to-end: git worktree, parallel implementer subagents, TDD-before-commit, per-task spec + code-quality review, final verification, branch finishing. Use to implement plans.
 
 Do not skip a stage. If you find yourself coding without a plan, stop and back up.
+
+## 3a. Caveman Mode
+
+- **caveman** — ultra-compressed response mode. Cuts ~75% tokens by dropping filler/articles/pleasantries while keeping technical substance exact. Trigger on user signals: "caveman mode", "talk like caveman", "less tokens", "be brief", `/caveman`. Once active, persists every response until "stop caveman" / "normal mode". Drop temporarily for security warnings, destructive-op confirmations, or when the user asks for clarification, then resume.
 
 ## 4. Subagent Discipline
 
