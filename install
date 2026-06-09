@@ -47,15 +47,6 @@ fi
 log "Updating Homebrew"
 brew update
 
-# --- Taps ------------------------------------------------------------------
-TAPS=(
-  netflix/nflx
-)
-for t in "${TAPS[@]}"; do
-  log "Tapping $t"
-  brew tap "$t" || true
-done
-
 # --- Formulae --------------------------------------------------------------
 FORMULAE=(
   ant
@@ -74,8 +65,6 @@ FORMULAE=(
   tmux
   tox
   ripgrep
-  netflix/nflx/grpc-cli
-  netflix/nflx/xlog
 )
 log "Installing formulae"
 brew install "${FORMULAE[@]}"
