@@ -143,7 +143,7 @@ alias zshconfig="v ~/.zshrc"
 alias ohmyzsh="v ~/.oh-my-zsh"
 alias zshsource="source ~/.zshrc"
 alias ax="cd ~/IdeaProjects/" 
-alias claude="newt --app-type java-project claude"
+alias claude="headroom wrap claude --model opus"
 alias ls='eza -lh --git --group-directories-first -s extension --icons'
 
 # Git Aliases

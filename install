@@ -60,6 +60,7 @@ FORMULAE=(
   jq
   neovim
   openjdk@21
+  pipx
   reattach-to-user-namespace
   rtk
   tmux
@@ -85,6 +86,12 @@ CASKS=(
 )
 log "Installing casks"
 brew install --cask "${CASKS[@]}"
+
+# --- Headroom (context-compression proxy) ----------------------------------
+# pipx isolates it in its own venv so the [all] extras don't clobber other
+# Python environments. The `claude` alias in zshrc routes through it.
+log "Installing headroom-ai"
+pipx install "headroom-ai[all]" 2>/dev/null || pipx upgrade headroom-ai || true
 
 # --- Oh My Zsh -------------------------------------------------------------
 export ZSH="${ZSH:-$HOME/.oh-my-zsh}"
