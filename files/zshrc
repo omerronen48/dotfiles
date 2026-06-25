@@ -178,19 +178,6 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 
-function shard() {
-  grpc -a dgwcontrol.kv -e $1 -r us-east-1 com.netflix.dgw.control.DgwControlService/GetNamespaces -d "{\"shard_identity\": \"$2\"}"
-}
-
-function cluster() {
-  grpc -a dgwcontrol.kv -e "$1" com.netflix.dgw.control.DgwControlService/GetNamespaces -d "{\"namespaceFilters\": [ { \"physicalClusterName\": \"$2\", \"include_shard_info\": true} ]}"
-}
-
-
-function namespace () {
-  grpc -a dgwcontrol.kv -e "$1" com.netflix.dgw.control.DgwControlService/GetNamespaces -d "{\"namespaceFilters\": [ { \"match_name\": \"$2\", \"include_shard_info\": true} ]}"
-}
-
 function ghrepo() {
   if [[ -e .git/ ]]; then
     $(which gh) -R corp/$(basename $PWD) "$@"
