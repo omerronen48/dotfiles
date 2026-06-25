@@ -9,6 +9,20 @@ DOTFILES_DIR="$SCRIPT_DIR/files"
 log() { printf "\n\033[1;34m==>\033[0m %s\n" "$*"; }
 have() { command -v "$1" >/dev/null 2>&1; }
 
+# Install only the brew packages that are missing, so an already-installed
+# formula/cask (or a pre-existing app) can't abort the script under `set -e`.
+brew_install() {
+  local kind="$1"; shift   # "" for formulae, "--cask" for casks
+  local pkg
+  for pkg in "$@"; do
+    if brew list $kind "$pkg" &>/dev/null; then
+      log "Already installed: $pkg"
+    else
+      brew install $kind "$pkg" || log "Failed to install $pkg (skipping)"
+    fi
+  done
+}
+
 # Symlink a file from the repo into the system, backing up any existing
 # non-symlink file. Symlinks let edits in either place stay in sync with the repo.
 link_dotfile() {
@@ -68,7 +82,7 @@ FORMULAE=(
   ripgrep
 )
 log "Installing formulae"
-brew install "${FORMULAE[@]}"
+brew_install "" "${FORMULAE[@]}"
 
 # fzf key bindings + completion
 if [[ -x "$(brew --prefix)/opt/fzf/install" ]]; then
@@ -85,13 +99,18 @@ CASKS=(
   warp
 )
 log "Installing casks"
-brew install --cask "${CASKS[@]}"
+brew_install "--cask" "${CASKS[@]}"
 
 # --- Headroom (context-compression proxy) ----------------------------------
 # pipx isolates it in its own venv so the [all] extras don't clobber other
 # Python environments. The `claude` alias in zshrc routes through it.
-log "Installing headroom-ai"
-pipx install "headroom-ai[all]" 2>/dev/null || pipx upgrade headroom-ai || true
+if have pipx; then
+  log "Installing headroom-ai via pipx"
+  pipx install "headroom-ai[all]" || pipx upgrade "headroom-ai[all]" || log "headroom-ai install/upgrade failed"
+  pipx ensurepath >/dev/null 2>&1 || true   # ensure ~/.local/bin (where the headroom script lands) is on PATH
+else
+  log "pipx not found, skipping headroom-ai (the claude alias depends on it)"
+fi
 
 # --- Oh My Zsh -------------------------------------------------------------
 export ZSH="${ZSH:-$HOME/.oh-my-zsh}"
