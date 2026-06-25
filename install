@@ -82,7 +82,6 @@ FORMULAE=(
   ripgrep
   bat
   zoxide
-  atuin
 )
 log "Installing formulae"
 brew_install "" "${FORMULAE[@]}"

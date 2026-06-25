@@ -250,9 +250,5 @@ fi
 # zoxide — `cd` learns your frecent dirs; still works as plain cd for real paths.
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
 
-# atuin — SQLite shell history, fuzzy search on Ctrl-R. Init after fzf so atuin
-# owns Ctrl-R; --disable-up-arrow leaves the arrows to history-substring-search.
-command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh --disable-up-arrow)"
-
 # Created by `pipx` on 2026-06-25 02:25:41
 export PATH="$PATH:/Users/omes/.local/bin"
