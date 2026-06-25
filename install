@@ -146,6 +146,14 @@ link_dotfile "$DOTFILES_DIR/init.lua"       "$HOME/.config/nvim/init.lua"
 link_dotfile "$DOTFILES_DIR/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
 link_dotfile "$DOTFILES_DIR/claude.md"      "$HOME/.claude/CLAUDE.md"
 
+# --- Claude skills (oroskills) -----------------------------------------------
+# Cloned to a stable dir so the symlinks its installer creates keep resolving.
+clone_or_pull https://github.com/omerronen48/oroskills.git "$HOME/.oroskills"
+if [[ -x "$HOME/.oroskills/install.sh" ]]; then
+  log "Installing oroskills (Claude skills)"
+  "$HOME/.oroskills/install.sh" --global || true
+fi
+
 # --- TPM (tmux plugin manager) --------------------------------------------
 clone_or_pull https://github.com/tmux-plugins/tpm.git "$HOME/.tmux/plugins/tpm"
 
