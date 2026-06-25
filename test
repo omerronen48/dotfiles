@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Bootstrap sanity checks for the dotfiles repo. Run: ./test
+# Lazy by design — parses/lints what's installed, skips what isn't, mutates nothing.
+set -uo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+fail=0
+pass() { printf '\033[1;32mok  \033[0m %s\n' "$*"; }
+bad()  { printf '\033[1;31mFAIL\033[0m %s\n' "$*"; fail=1; }
+skip() { printf '\033[1;33mskip\033[0m %s\n' "$*"; }
+
+# 1. bash scripts parse
+for f in install test files/claude-panes.sh; do
+  bash -n "$f" && pass "bash -n $f" || bad "bash -n $f"
+done
+
+# 2. zshrc parses (zsh-only syntax, so use zsh not bash)
+if command -v zsh >/dev/null 2>&1; then
+  zsh -n files/zshrc && pass "zsh -n files/zshrc" || bad "zsh -n files/zshrc"
+else
+  skip "zsh not installed — files/zshrc syntax unchecked"
+fi
+
+# 3. shellcheck if available (SC2086: install intentionally splits $kind into argv)
+if command -v shellcheck >/dev/null 2>&1; then
+  shellcheck -e SC1090,SC1091,SC2086 install files/claude-panes.sh test \
+    && pass "shellcheck" || bad "shellcheck"
+else
+  skip "shellcheck not installed — brew install shellcheck"
+fi
+
+# 4. tmux config parses (throwaway socket, killed after; doesn't touch real server)
+if command -v tmux >/dev/null 2>&1; then
+  if tmux -L dotfiles-test -f files/tmux.conf new-session -d 'exit' 2>/dev/null; then
+    pass "tmux -f files/tmux.conf"
+  else
+    bad "tmux -f files/tmux.conf"
+  fi
+  tmux -L dotfiles-test kill-server 2>/dev/null || true
+else
+  skip "tmux not installed"
+fi
+
+# 5. every file the installer symlinks actually exists in files/
+while read -r rel; do
+  [ -f "files/$rel" ] && pass "source exists: files/$rel" || bad "missing source: files/$rel"
+done < <(grep -oE 'DOTFILES_DIR/[^"]+' install | sed -E 's#DOTFILES_DIR/##')
+
+[ "$fail" -eq 0 ] && printf '\n\033[1;32mall checks passed\033[0m\n' || printf '\n\033[1;31msome checks failed\033[0m\n'
+exit "$fail"

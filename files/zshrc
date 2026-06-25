@@ -145,6 +145,7 @@ alias zshsource="source ~/.zshrc"
 alias ax="cd ~/IdeaProjects/" 
 alias claude="headroom wrap claude --model opus --permission-mode auto"
 alias ls='eza -lh --git --group-directories-first -s extension --icons'
+alias cat="bat --paging=never"
 
 # Git Aliases
 alias ga="git add"
@@ -236,3 +237,22 @@ gw() {
     fi
   fi
 }
+
+# fzf — Ctrl-T (files), Alt-C (cd into dir), completion. `fzf --zsh` is the modern
+# integration; fall back to the legacy ~/.fzf.zsh if this fzf predates it.
+export FZF_DEFAULT_OPTS='--height=40% --layout=reverse --border --info=inline'
+if fzf --zsh >/dev/null 2>&1; then
+  source <(fzf --zsh)
+else
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+fi
+
+# zoxide — `cd` learns your frecent dirs; still works as plain cd for real paths.
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
+
+# atuin — SQLite shell history, fuzzy search on Ctrl-R. Init after fzf so atuin
+# owns Ctrl-R; --disable-up-arrow leaves the arrows to history-substring-search.
+command -v atuin >/dev/null 2>&1 && eval "$(atuin init zsh --disable-up-arrow)"
+
+# Created by `pipx` on 2026-06-25 02:25:41
+export PATH="$PATH:/Users/omes/.local/bin"
