@@ -252,3 +252,10 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
 
 # Created by `pipx` on 2026-06-25 02:25:41
 export PATH="$PATH:/Users/omes/.local/bin"
+
+# bun completions
+[ -s "/Users/omes/.bun/_bun" ] && source "/Users/omes/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
