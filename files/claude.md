@@ -29,6 +29,15 @@ For any non-trivial work, follow this local skill chain. It supersedes the super
 
 Do not skip a stage. If you find yourself coding without a plan, stop and back up.
 
+### Routing: which front door
+
+Two sized entry points. Pick by the job — do not nest one in the other (the chain's per-task unit is already a stricter ship; nesting just double-loads discipline).
+
+- **`/ship` (ship-pipeline)** — small, self-contained feature in one sitting: planner → coder → tester → reviewer, sequential, single branch, no worktree, left for your review. Use when ALL hold: single feature with no roadmap/saved-spec need, fits one wave (no parallel tasks / no overlap analysis), and per-task gating isn't required.
+- **The chain (project → brainstorm → plan → execute)** — anything bigger. Escalate here if ANY hold: needs multiple milestones or a spec worth saving, tasks parallelize (wants worktree + overlap gate), or you want the TDD-before-commit artifact + two-stage review per task.
+
+When unsure, ask which door; default to the chain.
+
 ## 3a. Caveman Mode
 
 - **caveman** — ultra-compressed response mode. Cuts ~75% tokens by dropping filler/articles/pleasantries while keeping technical substance exact. Trigger on user signals: "caveman mode", "talk like caveman", "less tokens", "be brief", `/caveman`. Once active, persists every response until "stop caveman" / "normal mode". Drop temporarily for security warnings, destructive-op confirmations, or when the user asks for clarification, then resume.

@@ -144,6 +144,7 @@ alias ohmyzsh="v ~/.oh-my-zsh"
 alias zshsource="source ~/.zshrc"
 alias ax="cd ~/IdeaProjects/" 
 alias claude="headroom wrap claude --model opus --permission-mode auto"
+alias ol='select lmm in "llama3.2" "llama3.2-vision" "deepseek-r1:32b"; do ollama run "$lmm"; done'
 alias ls='eza -lh --git --group-directories-first -s extension --icons'
 alias cat="bat --paging=never"
 
@@ -252,6 +253,8 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
 
 # Created by `pipx` on 2026-06-25 02:25:41
 export PATH="$PATH:/Users/omes/.local/bin"
+export PATH="$PATH:/Users/omes/.turso"
+export PYTHONWARNINGS="ignore:urllib3"
 
 # bun completions
 [ -s "/Users/omes/.bun/_bun" ] && source "/Users/omes/.bun/_bun"

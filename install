@@ -23,32 +23,6 @@ brew_install() {
   done
 }
 
-# Symlink a file from the repo into the system, backing up any existing
-# non-symlink file. Symlinks let edits in either place stay in sync with the repo.
-link_dotfile() {
-  local src="$1" dest="$2"
-  if [[ ! -f "$src" ]]; then
-    log "Skipping $dest (source $src not found)"
-    return
-  fi
-  mkdir -p "$(dirname "$dest")"
-  if [[ -L "$dest" ]]; then
-    local current
-    current=$(readlink "$dest")
-    if [[ "$current" == "$src" ]]; then
-      return
-    fi
-    log "Replacing existing symlink $dest"
-    rm "$dest"
-  elif [[ -e "$dest" ]]; then
-    local backup="$dest.backup.$(date +%Y%m%d%H%M%S)"
-    log "Backing up existing $dest -> $backup"
-    mv "$dest" "$backup"
-  fi
-  log "Linking $dest -> $src"
-  ln -s "$src" "$dest"
-}
-
 # --- Homebrew --------------------------------------------------------------
 if ! have brew; then
   log "Installing Homebrew"
@@ -160,13 +134,8 @@ done
 
 # --- Dotfiles --------------------------------------------------------------
 # Symlinked from this repo so edits flow both ways.
-link_dotfile "$DOTFILES_DIR/zshrc"          "$HOME/.zshrc"
-link_dotfile "$DOTFILES_DIR/p10k.zsh"       "$HOME/.p10k.zsh"
-link_dotfile "$DOTFILES_DIR/claude-panes.sh" "$HOME/.config/tmux/claude-panes.sh"
-link_dotfile "$DOTFILES_DIR/tmux.conf"      "$HOME/.tmux.conf"
-link_dotfile "$DOTFILES_DIR/init.lua"       "$HOME/.config/nvim/init.lua"
-link_dotfile "$DOTFILES_DIR/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
-link_dotfile "$DOTFILES_DIR/claude.md"      "$HOME/.claude/CLAUDE.md"
+log "Symlinking dotfiles"
+"$SCRIPT_DIR/link"
 
 # --- Claude skills (oroskills) -----------------------------------------------
 # Cloned to a stable dir so the symlinks its installer creates keep resolving.
