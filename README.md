@@ -9,8 +9,10 @@ machine from zero.
 ```
 dotfiles/
 ├── install              # bootstrap script
+├── test                 # repo sanity checks (./test)
 └── files/
     ├── alacritty.toml   → ~/.config/alacritty/alacritty.toml
+    ├── claude-panes.sh  → ~/.config/tmux/claude-panes.sh
     ├── claude.md        → ~/.claude/CLAUDE.md
     ├── init.lua         → ~/.config/nvim/init.lua
     ├── p10k.zsh         → ~/.p10k.zsh
@@ -21,11 +23,12 @@ dotfiles/
 ## What gets installed
 
 - **Homebrew** 
-- **Formulae:** ant, awscli, ccm, docker, eza, fzf, gh, git, jq, neovim,
-  openjdk@21, reattach-to-user-namespace, ripgrep, rtk, tmux, tox,
-  grpc-cli, xlog
+- **Formulae:** ant, awscli, bat, ccm, docker, eza, fzf, gh, git, jq, neovim,
+  openjdk@21, pipx, reattach-to-user-namespace, ripgrep, rtk, tmux, tox, zoxide
 - **Casks:** alacritty, codex, font-meslo-lg-nerd-font, memoryanalyzer, warp
 - **fzf** shell key bindings + completion
+- **headroom-ai** (via pipx) — context-compression proxy the `claude` alias routes through
+- **oroskills** — custom Claude skills, installed globally
 - **Oh My Zsh** with custom plugins: zsh-autosuggestions, zsh-syntax-highlighting,
   fast-syntax-highlighting, zsh-autocomplete, zsh-history-substring-search,
   zsh-autopair, zsh-you-should-use
@@ -37,7 +40,7 @@ dotfiles/
 ## Usage
 
 ```sh
-git clone <this-repo> ~/dotfiles
+git clone https://github.com/omerronen48/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install
 ```
@@ -80,4 +83,5 @@ For each entry the installer:
 
 1. Drop the file in `files/` (no leading dot — easier to browse).
 2. Add a `link_dotfile` line to `install` pointing at its target path.
-3. Commit.
+3. Run `./test` to confirm scripts parse and every symlink source exists.
+4. Commit.
