@@ -72,8 +72,6 @@ CASKS=(
   claude-code
   codex
   font-meslo-lg-nerd-font
-  memoryanalyzer
-  warp
 )
 log "Installing casks"
 brew_install "--cask" "${CASKS[@]}"
