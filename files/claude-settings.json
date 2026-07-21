@@ -1,0 +1,222 @@
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "model": "claude-fable-5[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"/Users/omes/.claude/caveman-hook.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"/Users/omes/.claude/caveman-state.sh\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"/Users/omes/.claude/caveman-state.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state done || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state input || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh \"/Users/omes/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "ponytail@ponytail": true,
+    "watch@claude-video": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
+}

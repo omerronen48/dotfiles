@@ -16,12 +16,22 @@ subtree_has_claude() {
   return 1
 }
 
-# fields: pane_id | target(sess:win.pane) | "sess winname" | pane_title
+# State emoji from @claude_state pane option, set by claude-code hooks
+# (UserPromptSubmit/PostToolUse->working, Notification->input, Stop->done).
+state_emoji() {
+  case "$1" in
+    working) printf '⏳' ;;
+    input)   printf '❗' ;;
+    *)       printf '✅' ;;
+  esac
+}
+
+# fields: pane_id | target(sess:win.pane) | "emoji sess winname" | pane_title
 rows() {
   tmux list-panes -a -F \
-    '#{pane_pid}|#{pane_id}|#{session_name}:#{window_index}.#{pane_index}|#{session_name} #{window_name}|#{pane_title}' \
-    | while IFS='|' read -r pid pane target label title; do
-        subtree_has_claude "$pid" && printf '%s\t%s\t%s\t%s\n' "$pane" "$target" "$label" "$title"
+    '#{pane_pid}|#{pane_id}|#{session_name}:#{window_index}.#{pane_index}|#{@claude_state}|#{session_name} #{window_name}|#{pane_title}' \
+    | while IFS='|' read -r pid pane target state label title; do
+        subtree_has_claude "$pid" && printf '%s\t%s\t%s %s\t%s\n' "$pane" "$target" "$(state_emoji "$state")" "$label" "$title"
       done
 }
 
