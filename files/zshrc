@@ -145,6 +145,9 @@ alias zshsource="source ~/.zshrc"
 alias ax="cd ~/IdeaProjects/" 
 alias claude="headroom wrap claude --model opus --permission-mode auto"
 alias ol='select lmm in "llama3.2" "llama3.2-vision" "deepseek-r1:32b"; do ollama run "$lmm"; done'
+# Remote control (/rc) needs a direct api.anthropic.com connection, which headroom's
+# proxy breaks. Use crc for a remote-control session (no headroom compression).
+alias crc="command claude --model opus --permission-mode auto"
 alias ls='eza -lh --git --group-directories-first -s extension --icons'
 alias cat="bat --paging=never"
 

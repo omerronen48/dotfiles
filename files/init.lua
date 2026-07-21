@@ -146,8 +146,7 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope.nvim',
     branch = "master",
-    commit = "52f500110bcf9190b44b4d8640162adc86772ec4",
-    version = '*',
+    commit = "427b576c16792edad01a92b89721d923c19ad60f",
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
 
@@ -322,7 +321,7 @@ require('lazy').setup({
   {
     'nvim-treesitter/nvim-treesitter',
     branch = "master",
-    commit = "8012b55eee65eba1d1ee4df0a186d30e72dcbe65",
+    commit = "cf12346a3414fa1b06af75c79faebe7f76df080a",
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
