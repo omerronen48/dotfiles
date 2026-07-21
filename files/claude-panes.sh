@@ -35,10 +35,16 @@ rows() {
       done
 }
 
+# Reload entry point: fzf re-invokes the script with --rows to refresh the list.
+[ "${1:-}" = "--rows" ] && { rows; exit 0; }
+
 command -v fzf >/dev/null 2>&1 || { tmux display-message "claude-panes: fzf required"; exit 0; }
 
+# load:reload-sync re-fires after every reload, so the list + preview refresh
+# every 2s while the picker stays open — selection position is preserved.
 sel=$(rows | fzf --ansi --delimiter='\t' --with-nth=3,4 \
-  --reverse --cycle --header='Claude panes · enter: jump' \
+  --reverse --cycle --header='Claude panes · enter: jump · live' \
+  --bind="load:reload-sync(sleep 2; $0 --rows)+refresh-preview" \
   --preview='tmux capture-pane -ept {1}' --preview-window='right,62%,wrap')
 [ -z "$sel" ] && exit 0
 
