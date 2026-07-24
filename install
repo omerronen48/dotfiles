@@ -55,6 +55,7 @@ FORMULAE=(
   tox
   ripgrep
   bat
+  uv
   zoxide
 )
 log "Installing formulae"
@@ -72,6 +73,7 @@ CASKS=(
   claude-code
   codex
   font-meslo-lg-nerd-font
+  macshot
 )
 log "Installing casks"
 brew_install "--cask" "${CASKS[@]}"
@@ -85,6 +87,24 @@ if have pipx; then
   pipx ensurepath >/dev/null 2>&1 || true   # ensure ~/.local/bin (where the headroom script lands) is on PATH
 else
   log "pipx not found, skipping headroom-ai (the claude alias depends on it)"
+fi
+
+# --- Graphify (codebase knowledge-graph skill) -----------------------------
+# pip package is `graphifyy` (double y); the CLI it installs is `graphify`.
+# `graphify install` registers the skill with Claude Code (its default platform).
+if have pipx; then
+  log "Installing graphify via pipx"
+  pipx install graphifyy || pipx upgrade graphifyy || log "graphifyy install/upgrade failed"
+  pipx ensurepath >/dev/null 2>&1 || true
+  export PATH="$HOME/.local/bin:$PATH"   # so `graphify` resolves in this same run
+  if have graphify; then
+    log "Registering graphify skill with Claude Code"
+    graphify install || log "graphify skill registration failed (run 'graphify install' manually)"
+  else
+    log "graphify not on PATH after pipx install; run 'graphify install' manually"
+  fi
+else
+  log "pipx not found, skipping graphify"
 fi
 
 # --- Oh My Zsh -------------------------------------------------------------

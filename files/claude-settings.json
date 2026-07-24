@@ -2,7 +2,7 @@
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -198,7 +198,8 @@
   },
   "enabledPlugins": {
     "ponytail@ponytail": true,
-    "watch@claude-video": true
+    "watch@claude-video": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
