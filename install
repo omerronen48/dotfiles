@@ -80,6 +80,7 @@ brew_install "--cask" "${CASKS[@]}"
 # mac-shot-x lives in a custom tap.
 log "Tapping omerronen48/mac-shot-x"
 brew tap omerronen48/mac-shot-x https://github.com/omerronen48/mac-shot-x || true
+brew trust --cask omerronen48/mac-shot-x/mac-shot-x || true
 brew_install "--cask" mac-shot-x
 
 # --- FreeFlow (DMG, no cask) -----------------------------------------------
