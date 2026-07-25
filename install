@@ -73,10 +73,31 @@ CASKS=(
   claude-code
   codex
   font-meslo-lg-nerd-font
-  macshot
 )
 log "Installing casks"
 brew_install "--cask" "${CASKS[@]}"
+
+# mac-shot-x lives in a custom tap.
+log "Tapping omerronen48/mac-shot-x"
+brew tap omerronen48/mac-shot-x https://github.com/omerronen48/mac-shot-x || true
+brew_install "--cask" mac-shot-x
+
+# --- FreeFlow (DMG, no cask) -----------------------------------------------
+# Free dictation app; distributed as a DMG, so download + mount + copy by hand.
+if [[ -d "/Applications/FreeFlow.app" ]]; then
+  log "Already installed: FreeFlow"
+else
+  log "Installing FreeFlow"
+  ff_tmp="$(mktemp -d)"
+  if curl -fsSL -o "$ff_tmp/FreeFlow.dmg" https://github.com/zachlatta/freeflow/releases/latest/download/FreeFlow.dmg; then
+    hdiutil attach "$ff_tmp/FreeFlow.dmg" -nobrowse -quiet -mountpoint "$ff_tmp/mnt"
+    cp -R "$ff_tmp/mnt/FreeFlow.app" /Applications/
+    hdiutil detach "$ff_tmp/mnt" -quiet
+  else
+    log "Failed to download FreeFlow (skipping)"
+  fi
+  rm -rf "$ff_tmp"
+fi
 
 # --- Headroom (context-compression proxy) ----------------------------------
 # pipx isolates it in its own venv so the [all] extras don't clobber other
