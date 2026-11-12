@@ -2,7 +2,7 @@
   "env": {
     "DISABLE_AUTOUPDATER": "1"
   },
-  "model": "opus[1m]",
+  "model": "fable[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -35,15 +35,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
             "async": true
           }
@@ -52,21 +43,10 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
+            "command": "bash \"/Users/omes/.claude/guard-edits.sh\""
           }
         ]
       }
@@ -76,8 +56,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state done || true",
+            "async": true
           }
         ]
       },
@@ -85,97 +65,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state done || true",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "StopFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "TeammateIdle": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
+            "command": "bash \"/Users/omes/.claude/goal-stop.sh\""
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      },
-      {
         "hooks": [
           {
             "type": "command",
             "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
             "async": true
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
           }
         ]
       }
@@ -199,7 +100,10 @@
   "enabledPlugins": {
     "ponytail@ponytail": true,
     "watch@claude-video": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "egm@egm": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -213,11 +117,45 @@
         "source": "github",
         "repo": "bradautomates/claude-video"
       }
+    },
+    "egm": {
+      "source": {
+        "source": "github",
+        "repo": "google/elephant-goldfish-model"
+      }
     }
   },
   "effortLevel": "high",
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: not queryable here — assume private per shipped default (github.com/omerronen48/dotfiles, no visibility signal found)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary (note: gist.githubusercontent.com was contacted once in this project's transcripts — treat as outside trust boundary, not internal)",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: main (default); protected-branch/ruleset status not queryable here",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo (github.com:omerronen48/dotfiles) and its remote only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar. Note: repo .gitignore excludes `.tokensave`, suggesting a local token/credential file is expected outside version control",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: personal/hobby dev environment tooling (dotfiles bootstrap for a personal macOS setup)",
+      "**Trusted repo**: /Users/omes/Desktop/dotfiles (github.com:omerronen48/dotfiles) — treat as private per default; routine edits and pushes to this repo and its remote are OK, ported/foreign content is not automatically this repo's own work",
+      "**Org-specific CLIs**: None configured",
+      "routine under omerronen48/ prefix: no additional evidence beyond the single trusted repo remote — do not extend trust to other omerronen48/* repos found under the home directory (oroskills, dash, geo-studio) without separate confirmation, since Q2 scope is just this project"
+    ]
+  }
 }

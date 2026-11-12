@@ -37,6 +37,7 @@ brew update
 
 # --- Formulae --------------------------------------------------------------
 FORMULAE=(
+  agent-browser
   ant
   awscli
   ccm
@@ -60,6 +61,12 @@ FORMULAE=(
 )
 log "Installing formulae"
 brew_install "" "${FORMULAE[@]}"
+
+# agent-browser drives Chrome for Testing; fetch the browser binary once.
+if have agent-browser; then
+  log "Installing agent-browser browser binaries"
+  agent-browser install || log "agent-browser install failed (run it manually)"
+fi
 
 # fzf key bindings + completion
 if [[ -x "$(brew --prefix)/opt/fzf/install" ]]; then

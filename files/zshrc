@@ -143,7 +143,8 @@ alias zshconfig="v ~/.zshrc"
 alias ohmyzsh="v ~/.oh-my-zsh"
 alias zshsource="source ~/.zshrc"
 alias ax="cd ~/IdeaProjects/" 
-alias claude="headroom wrap claude --model opus --permission-mode auto"
+# --no-tokensave/--no-serena: graphify is the code graph; skip headroom's (~100 tool names).
+alias claude="headroom wrap claude --no-tokensave --no-serena --remote-control --model claude-opus-4-8 --permission-mode auto"
 alias ol='select lmm in "llama3.2" "llama3.2-vision" "deepseek-r1:32b"; do ollama run "$lmm"; done'
 # Remote control (/rc) needs a direct api.anthropic.com connection, which headroom's
 # proxy breaks. Use crc for a remote-control session (no headroom compression).
@@ -252,7 +253,9 @@ else
 fi
 
 # zoxide — `cd` learns your frecent dirs; still works as plain cd for real paths.
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
+# Skipped inside Claude Code: its shell snapshot drops the chpwd hook, so every
+# tool-call `cd` printed zoxide's doctor warning.
+[[ -z "$CLAUDECODE" ]] && command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
 
 # Created by `pipx` on 2026-06-25 02:25:41
 export PATH="$PATH:/Users/omes/.local/bin"
