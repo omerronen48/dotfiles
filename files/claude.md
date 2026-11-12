@@ -20,27 +20,24 @@ Behavioral guidelines that bias toward correctness, simplicity, and a clean main
 
 ## 3. The Workflow Chain (project → brainstorm → plan → execute)
 
-For any non-trivial work, follow this local skill chain. It supersedes the superpowers equivalents — do not invoke `superpowers:brainstorming`, `superpowers:writing-plans`, `superpowers:executing-plans`, `superpowers:subagent-driven-development`, `superpowers:dispatching-parallel-agents`, `superpowers:test-driven-development`, `superpowers:using-git-worktrees`, `superpowers:verification-before-completion`, or `superpowers:finishing-a-development-branch` directly. They are subsumed.
+For any non-trivial work, follow this local skill chain.
 
 - **project-time** — turn a project-sized idea (new project or large multi-feature initiative) into a technical roadmap with milestones. Resolves stack, architecture, scope, and non-functional targets up front so feature-level brainstorms stop re-litigating them. Optional — skip for a single feature inside an existing codebase. Hands off to brainstorming-time (one milestone at a time).
-- **brainstorming-time** — turn an idea (or one roadmap milestone) into a reviewable spec with a mind map. Use BEFORE any creative work (new features, new components, behavior changes). Hands off to writing-plans-time.
+- **brainstorming-time** — turn an idea (or one roadmap milestone) into a reviewable spec with a mind map. Use BEFORE any creative work (new features, new components, behavior changes). Non-trivial specs get one fresh-context Goldfish review (`egm:egm-synthesizer`) before the user gate — that is the only place egm is used; do not run `egm-brainstorm` / `egm-draft`. Hands off to writing-plans-time.
 - **writing-plans-time** — turn an approved spec into a plan with a File Edit Manifest and parallel-executable waves. Use BEFORE touching code. Hands off to executing-plan-time.
 - **executing-plan-time** — run the plan end-to-end: git worktree, parallel implementer subagents, TDD-before-commit, per-task spec + code-quality review, final verification, branch finishing. Use to implement plans.
 
-Do not skip a stage. If you find yourself coding without a plan, stop and back up.
+Inside the chain, do not skip a stage. If you find yourself coding a chain-sized change without a plan, stop and back up.
 
 ### Routing: which front door
 
-Two sized entry points. Pick by the job — do not nest one in the other (the chain's per-task unit is already a stricter ship; nesting just double-loads discipline).
+Pick by the job — do not nest one in the other (the chain's per-task unit is already a stricter ship; nesting just double-loads discipline).
 
-- **`/ship` (ship-pipeline)** — small, self-contained feature in one sitting: planner → coder → tester → reviewer, sequential, single branch, no worktree, left for your review. Use when ALL hold: single feature with no roadmap/saved-spec need, fits one wave (no parallel tasks / no overlap analysis), and per-task gating isn't required.
-- **The chain (project → brainstorm → plan → execute)** — anything bigger. Escalate here if ANY hold: needs multiple milestones or a spec worth saving, tasks parallelize (wants worktree + overlap gate), or you want the TDD-before-commit artifact + two-stage review per task.
+- **Direct** — trivial work (typo, one-liner, config tweak, a question): just do it, verify, done. No pipeline.
+- **`/ship` (ship-pipeline)** — small, self-contained feature in one sitting: planner → tester → coder → reviewer, sequential, single branch, no worktree, left for your review. Use when ALL hold: single feature with no roadmap/saved-spec need, fits one wave (no parallel tasks / no overlap analysis), and per-task gating isn't required.
+- **The chain (project → brainstorm → plan → execute)** — anything bigger. Escalate here if ANY hold: needs multiple milestones or a spec worth saving, tasks parallelize (wants worktree + overlap gate), or you want the TDD-before-commit artifact + per-task review.
 
-When unsure, ask which door; default to the chain.
-
-## 3a. Caveman Mode
-
-- **caveman** — ultra-compressed response mode. Cuts ~75% tokens by dropping filler/articles/pleasantries while keeping technical substance exact. Trigger on user signals: "caveman mode", "talk like caveman", "less tokens", "be brief", `/caveman`. Once active, persists every response until "stop caveman" / "normal mode". Drop temporarily for security warnings, destructive-op confirmations, or when the user asks for clarification, then resume.
+When unsure between `/ship` and the chain, ask which door; default to the chain.
 
 ## 4. Subagent Discipline
 
@@ -76,6 +73,14 @@ The main context is precious. Push work into fresh subagents whenever possible.
 - Bug report → point at the logs, errors, or failing tests → resolve them. Zero context switching from the user when the path is clear.
 - Fix failing CI tests without being told how.
 - Only escalate when intent is ambiguous or a design decision is required.
+
+## 9. Browser — agent-browser Only
+
+- All browser testing and headless automation goes through the `agent-browser` CLI (Bash). Do not use claude-in-chrome, the built-in browser pane, computer-use, Playwright, or Puppeteer unless the user asks for one by name.
+- First use in a session: `agent-browser skills get core` (version-matched guide). Unsure of a flag: `agent-browser --help` — never guess.
+- Own session, every command: `agent-browser session id --scope worktree --prefix task`, then pass `--session <name>`.
+- Loop: `open <url>` → `snapshot -i` (elements with `@eN` refs) → `click @e3` / `fill @e2 "text"` / `press Enter` → re-snapshot after any page change. `wait --text "<expected>"` instead of sleeping.
+- Prefer snapshots; `screenshot <path>` only for visual evidence (UI goals, `.loop/shots/`). `close` when done.
 
 ---
 

@@ -252,7 +252,9 @@ else
 fi
 
 # zoxide — `cd` learns your frecent dirs; still works as plain cd for real paths.
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
+# Skipped inside Claude Code: its shell snapshot drops the chpwd hook, so every
+# tool-call `cd` printed zoxide's doctor warning.
+[[ -z "$CLAUDECODE" ]] && command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh --cmd cd)"
 
 # Created by `pipx` on 2026-06-25 02:25:41
 export PATH="$PATH:/Users/omes/.local/bin"

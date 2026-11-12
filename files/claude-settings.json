@@ -35,15 +35,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
             "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
             "async": true
           }
@@ -59,28 +50,9 @@
             "command": "rtk hook claude"
           }
         ]
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
       }
     ],
     "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "hooks": [
           {
@@ -91,91 +63,13 @@
         ]
       }
     ],
-    "StopFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "TeammateIdle": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "hooks": [
           {
             "type": "command",
             "command": "[ -n \"$TMUX_PANE\" ] && tmux set-option -pt \"$TMUX_PANE\" @claude_state working || true",
             "async": true
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PermissionRequest": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -r '/Users/omes/.orca/agent-hooks/claude-hook.sh' ] && [ -x '/Users/omes/.orca/agent-hooks/claude-hook.sh' ]; then /bin/sh '/Users/omes/.orca/agent-hooks/claude-hook.sh'; else cat >/dev/null 2>&1 || :; fi",
-            "timeout": 10
           }
         ]
       }
@@ -199,7 +93,8 @@
   "enabledPlugins": {
     "ponytail@ponytail": true,
     "watch@claude-video": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": true,
+    "egm@egm": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -212,6 +107,12 @@
       "source": {
         "source": "github",
         "repo": "bradautomates/claude-video"
+      }
+    },
+    "egm": {
+      "source": {
+        "source": "github",
+        "repo": "google/elephant-goldfish-model"
       }
     }
   },
