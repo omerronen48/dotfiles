@@ -11,12 +11,10 @@ Behavioral guidelines that bias toward correctness, simplicity, and a clean main
 
 ## 2. Simplicity & Surgical Changes
 
-- Minimum code that solves the problem. No speculative features, no abstractions for single-use code, no error handling for impossible scenarios.
+- **Ponytail** (plugin, injected every session) owns "how little to build": YAGNI, stdlib/native first, shortest working diff, no speculative abstractions. Follow it; the bullets below only add what it does not cover.
 - Every changed line traces directly to the user's request. Don't "improve" adjacent code, comments, or formatting.
 - Match existing style even if you'd do it differently. Mention unrelated dead code; don't delete it unless asked.
 - Remove orphans your changes created (unused imports/vars/functions). Don't remove pre-existing dead code.
-- For non-trivial changes, pause once and ask: "Is there a more elegant way?" If a fix feels hacky, write the elegant version. Skip this for obvious one-liners — don't over-engineer.
-- Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
 ## 3. The Workflow Chain (project → brainstorm → plan → execute)
 
@@ -41,10 +39,11 @@ When unsure between `/ship` and the chain, ask which door; default to the chain.
 
 ## 4. Subagent Discipline
 
-The main context is precious. Push work into fresh subagents whenever possible.
+The main context is precious, but a subagent costs a cold start and a lossy handoff. Delegate when the work is wide; do it inline when it is a handful of tool calls.
 
 - One task per subagent, with the exact slice of context it needs — not your conversation history.
-- Reads, edits, test runs, and long file scans happen inside subagents.
+- Delegate: multi-file reads, broad searches, long file scans, multi-file edits, long test runs, independent parallel work.
+- Inline: a known file, a targeted grep, a one- or two-file edit, a quick test run.
 - Main keeps the plan, ≤5-line status reports per task, and short wave summaries.
 - Before reading a file in main, ask: should this be a subagent or a `graphify query`?
 
@@ -82,8 +81,12 @@ The main context is precious. Push work into fresh subagents whenever possible.
 - Loop: `open <url>` → `snapshot -i` (elements with `@eN` refs) → `click @e3` / `fill @e2 "text"` / `press Enter` → re-snapshot after any page change. `wait --text "<expected>"` instead of sleeping.
 - Prefer snapshots; `screenshot <path>` only for visual evidence (UI goals, `.loop/shots/`). `close` when done.
 
+## 10. RTK — Big Output Only
+
+- No auto-rewrite hook. Run commands plainly by default so output is exact.
+- Prefix `rtk` only when output would be large and a summary is enough: `rtk test <cmd>` (failures only), `rtk err <cmd>` (errors/warnings only), `rtk git log`, `rtk git diff` on big diffs, `rtk log <file>`, `rtk tsc`, `rtk lint`, `rtk cargo`, `rtk npm`.
+- Never through rtk when exact text matters: a diff you will review or edit from, grep with line numbers, anything you will quote.
+
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites from overcomplication, clarifying questions come before implementation rather than after mistakes, the main context stays light, and the same mistakes don't recur.
-
-@RTK.md
